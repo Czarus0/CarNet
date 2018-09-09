@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CarDealer</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/forAll.css">
+    <link rel="stylesheet" href="../css/carDealers.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-bot-50">
+        <div class="container">
+            <a class="navbar-brand" href="/">CarNet</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/main">Lista Salonów <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/quickFind">Szybkie sprawdzenie</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container styling con-pad margin-bot-50">
+        <div class="row mar-bot-15 grey-background">
+            <table class="table col-8">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            <span class="right-mar">Powrót do strony głównej</span>
+                            <a th:href="'/main'" class="btn btn-info" role="button">Powrót</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th style="padding-left: 20px" scope="row">Nazwa firmy: </th>
+                        <th th:text="${carDealer.nameOfFirm}">Nazwa</th>
+                    </tr>
+                    <tr>
+                        <th style="padding-left: 20px" scope="row">Numer telefonu: </th>
+                        <th th:text="${carDealer.phoneNumber} ? ${carDealer.phoneNumber} : 'brak'">brak</th>
+                    </tr>
+                    <tr>
+                        <th style="padding-left: 20px" scope="row">Godziny otwarcia: </th>
+                        <th th:text="${carDealer.openFrom} + '-' + ${carDealer.openTo}">Godziny</th>
+                    </tr>
+                    <tr>
+                        <th style="padding-left: 20px" scope="row">Adres: </th>
+                        <th th:text="${carDealer.street} + ' ' + ${carDealer.numberHome} + ', ' +
+                                         ${carDealer.postCode} + ' ' + ${carDealer.city} + ', ' +
+                                         ${carDealer.country}">Adres firmy</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mar-bot-15 col-4 pad-ver-10">
+                <img class="rounded img-carDealer" th:src="${carDealer.carDealerImage}">
+            </div>
+        </div>
+
+        <h2><a>Samochody</a></h2>
+        <div class="row">
+            <div class="col-6 car-info" th:each="car: ${cars}">
+                <div class="row">
+                    <div class="col-4">
+                        <p class="car-name" th:text="'Marka: ' + ${car.make}">Marka</p>
+                        <p class="car-name" th:text="'Model: ' + ${car.model}">Model</p>
+                        <p th:text="'Rocznik: ' + ${car.yearOfProduction}">Rocznik</p>
+                        <p th:text="'Licznik: ' + ${car.used} + 'km'">Przejachane</p>
+                        <p th:text="'Cena: ' + ${car.price} + 'zł'">Koszt</p>
+                        <td><a th:href="@{'/cardealers/' + ${car.carDealerId} + '/cars/' + ${car.carId}}"
+                               class="btn btn-info" role="button">Więcej</a></td>
+                    </div>
+                    <div class="col-8">
+                        <img class="rounded img-carDealer"
+                             th:src="${car.carImage} ? ${car.carImage} : '/img/cars/none_car.jpg'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>

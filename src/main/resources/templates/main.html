@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>MainPage</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/forAll.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-bot-50">
+        <div class="container">
+            <a class="navbar-brand" href="/">CarNet</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/main">Lista Salonów <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/quickFind">Szybkie sprawdzenie</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container styling con-pad-0 mar-bot-50">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Nazwa</th>
+                    <th scope="col">Adres</th>
+                    <th scope="col">Numer telefonu</th>
+                    <th scope="col">Godziny otwarcia</th>
+                    <th scope="col">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="carDealer: ${shortInfoCarDealers}">
+                    <th scope="row" th:text="${carDealer.nameOfFirm}">Nazwa firmy</th>
+                    <td th:text="${carDealer.street} + ' ' + ${carDealer.numberHome} + ', ' + ${carDealer.city}
+                    + ', ' + ${carDealer.country}">Adres firmy</td>
+                    <td th:text="${carDealer.phoneNumber} ? ${carDealer.phoneNumber} : 'nie podano'">Numer do firmy</td>
+                    <td th:text="${carDealer.openFrom} + '-' + ${carDealer.openTo}">Godziny otwarcia firmy</td>
+                    <td><a th:href="@{'/cardealers/' + ${carDealer.carDealerId}}"
+                           class="btn btn-info" role="button">Link</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+</body>
+</html>

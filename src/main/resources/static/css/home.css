@@ -1,0 +1,35 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 60px;
+    background-color: #343a40;
+}
+
+.jumbotron {
+    background-color: #979aa0;
+}
+
+.my-4 {
+    border-top: 1px solid #ff9321;
+}
+
+.lead {
+    text-align: right;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.text-white {
+    color: white;
+}
+
+.btn-grey {
+    background-color: #343a40;
+    border-color: black;
+}
+
+.btn-grey:hover {
+    background-color: black;
+    border-color: white;
+}

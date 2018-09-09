@@ -1,0 +1,67 @@
+.con-pad {
+    padding: 0 16px;
+}
+
+.mar-bot-15 {
+    margin-bottom: 15px;
+}
+
+.grey-background {
+    background-color: #e9ecef;
+}
+
+.pad-ver-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.img-carDealer {
+    width: 100%;
+    /*height: 100%;*/
+    border: #ff9321 solid 2px;
+}
+
+h2 > a {
+    position: relative;
+    color: #000;
+    text-decoration: none;
+    text-decoration-color: #ff9321;
+}
+
+h2 > a:hover {
+    color: #000;
+}
+
+h2 > a:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #ff9321;
+    visibility: hidden;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+h2 > a:hover:before {
+    visibility: visible;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+.car-info {
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+
+.car-name {
+    font-weight: bold;
+}
+
+.right-mar {
+    margin-right: 20px;
+}

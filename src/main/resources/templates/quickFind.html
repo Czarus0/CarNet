@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>MainPage</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/forAll.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body onload="setMakeAndModel()">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-bot-50">
+        <div class="container">
+            <a class="navbar-brand" href="/">CarNet</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/main">Lista Salonów <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/quickFind">Szybkie sprawdzenie</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<div class="container styling con-pad-0 mar-bot-50">
+    <form>
+        <div class="row">
+            <div class="form-group col-5">
+                <label for="carMakes">Marki samochodowe</label>
+                <select class="form-control" id="carMakes" onchange="addParamsMake()">
+                    <option>Wszystkie marki</option>
+                    <th:block th:each="make: ${makes}">
+                        <option th:text="${make}">Marka</option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="form-group col-5">
+                <label for="carModels">Model Samochodu</label>
+                <select class="form-control" id="carModels" disabled onchange="addParamsModel()">
+                    <option>Wszystkie modele</option>
+                    <th:block th:each="model: ${models}">
+                        <option th:text="${model}">Model</option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="col-2">
+                <button onclick="setVariables()">Here</button>
+            </div>
+        </div>
+    </form>
+    <table class="table" style="table-layout: fixed">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Marka</th>
+                <th scope="col">Model</th>
+                <th scope="col">Rok</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Dealer</th>
+                <th scope="col">Więcej</th>
+            </tr>
+        </thead>
+        <tbody id="cars-content">
+            <tr th:each="car: ${cars}">
+                <th scope="row" th:text="${car.make}">Marka</th>
+                <td th:text="${car.model}">Model</td>
+                <td th:text="${car.yearOfProduction}">Rok produkcji</td>
+                <td th:text="${car.price} + 'zł'">Cena</td>
+                <td th:text="${car.carDealerName}">Nazwa formy</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script src="../js/quickFind.js"></script>
+</body>
+</html>

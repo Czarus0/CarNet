@@ -1,0 +1,31 @@
+body {
+    background-color: #979aa0;
+    overflow: scroll;
+}
+
+.btn-info {
+    background-color: #343a40;
+    border-color: black;
+}
+
+.navbar {
+    border-bottom: 1px solid #ff9321;
+}
+
+.btn-info:hover {
+    background-color: black;
+    border-color: white;
+}
+
+.table td, .table th {
+    border: none;
+}
+
+.margin-bot-50 {
+    margin-bottom: 50px;
+}
+
+.styling {
+    border: #343a40 solid 5px;
+    background-color: white;
+}

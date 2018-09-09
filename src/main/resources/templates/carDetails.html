@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CarDealer</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../../css/forAll.css">
+    <link rel="stylesheet" href="../../../css/car.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-bot-50">
+        <div class="container">
+            <a class="navbar-brand" href="/">CarNet</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/main">Lista Salonów <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/quickFind">Szybkie sprawdzenie</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container styling margin-bot-50 pad-20">
+        <div class="row">
+            <div class="col-4">
+                <a th:href="@{'/cardealers/' + ${car.carDealerId}}"
+                   class="btn btn-info" role="button">Powrót do dealera</a>
+                <table class="table">
+                    <thead class="carName">
+                        <tr>
+                            <th colspan="2" th:text="${car.make} + ' ' + ${car.model}">Nazwa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Rocznik:</th>
+                            <td th:text="${car.yearOfProduction}">Rok produkcji</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Licznik:</th>
+                            <td th:text="${car.used}">Na liczniku</td>
+                        </tr>
+                        <tr>
+                            <th class="price" colspan="2" scope="row" th:text="${car.price} + 'zł'">Cena</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rok produkcji:</th>
+                            <td th:text="${car.yearOfProduction}">Rok produkcji</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rodzaj paliwa:</th>
+                            <td th:switch="${car.fuel}">
+                                <span th:case="${T(pl.czarek.carnet.data.entity.Fuel).OIL}">Ropa</span>
+                                <span th:case="${T(pl.czarek.carnet.data.entity.Fuel).PETROL}">Benzyna</span>
+                                <span th:case="${T(pl.czarek.carnet.data.entity.Fuel).GAS}">LPG</span>
+                                <span th:case="*">Nieznane</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Silnik:</th>
+                            <td th:text="${car.engine}">Pojemność silnika</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Dodatki:</th>
+                            <td th:text="${car.airConditioning} ? 'Klimatyzacja' : 'Brak'">Dodatki</td>
+                        </tr>
+                        <tr class="dates">
+                            <td th:text="'Data wystawienia: ' + ${car.datePosted}">Wystawienie</td>
+                            <td th:text="'Data sprzedania: ' + (${car.dateSold} ? ${car.dateSold} : 'Na sprzedaż')">Sprzedaż</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-8">
+                <img class="img-background" th:src="${car.carImage} ? ${car.carImage} : '/img/cars/none_car.jpg'">
+            </div>
+        </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>
