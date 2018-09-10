@@ -5,10 +5,10 @@ var addParamsMake = function() {
 
     var marks = document.getElementById("carMakes");
 
-    var newUrl = url + '?';
+    var newUrl = url;
 
     if(marks.value !== marks[0].value) {
-        newUrl += 'carMake=' + marks.value;
+        newUrl += '?carMake=' + marks.value;
     }
 
     window.location.href = newUrl;
@@ -24,10 +24,10 @@ var addParamsModel = function() {
     var marks = document.getElementById("carMakes");
     var models = document.getElementById("carModels");
 
-    var newUrl = url + '?';
+    var newUrl = url;
 
     if(marks.value !== marks[0].value) {
-        newUrl += 'carMake=' + marks.value;
+        newUrl += '?carMake=' + marks.value;
 
         if(models.value !== models[0].value) {
             newUrl += "&carModel=" + models.value;

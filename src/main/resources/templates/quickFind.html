@@ -28,15 +28,18 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/quickFind">Szybkie sprawdzenie</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addCar">Dodawanie samochodu</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-<div class="container styling con-pad-0 mar-bot-50">
+<div class="container styling con-pad-0 margin-bot-50">
     <form>
-        <div class="row">
-            <div class="form-group col-5">
+        <div class="row" style="margin: 10px">
+            <div class="form-group col-6">
                 <label for="carMakes">Marki samochodowe</label>
                 <select class="form-control" id="carMakes" onchange="addParamsMake()">
                     <option>Wszystkie marki</option>
@@ -45,7 +48,7 @@
                     </th:block>
                 </select>
             </div>
-            <div class="form-group col-5">
+            <div class="form-group col-6">
                 <label for="carModels">Model Samochodu</label>
                 <select class="form-control" id="carModels" disabled onchange="addParamsModel()">
                     <option>Wszystkie modele</option>
@@ -53,9 +56,6 @@
                         <option th:text="${model}">Model</option>
                     </th:block>
                 </select>
-            </div>
-            <div class="col-2">
-                <button onclick="setVariables()">Here</button>
             </div>
         </div>
     </form>

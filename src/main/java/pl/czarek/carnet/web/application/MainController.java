@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.czarek.carnet.business.service.CarDealerService;
 import pl.czarek.carnet.business.service.CarService;
@@ -34,5 +35,10 @@ public class MainController {
         model.addAttribute("makes", carService.getAllMakes());
         model.addAttribute("models", carService.getAllModelInMake(carMake));
         return "quickFind";
+    }
+
+    @RequestMapping(value = "/addCar", method = RequestMethod.GET)
+    public String addCar() {
+        return "addCar";
     }
 }
