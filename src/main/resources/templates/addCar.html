@@ -39,57 +39,64 @@
 
     <div class="container styling margin-bot-50 pad-20">
         <form>
-            <label for="carDealers">Salon samochodowy</label>
-            <select class="form-control" id="carDealers">
-                <option>Wybierz salon</option>
-            </select>
-            <div class="form-group">
-                <label for="inputMark">Marka: </label>
-                <input type="text" class="form-control" id="inputMark" placeholder="Wprowadź markę">
-            </div>
-            <div class="form-group">
-                <label for="inputModel">Model: </label>
-                <input type="text" class="form-control" id="inputModel" placeholder="Wprowadź model">
-            </div>
-            <div class="form-group">
-                <label for="inputYear">Rok produkcji: </label>
-                <input type="text" class="form-control" id="inputYear" placeholder="Wprowadź rok produkcji">
-            </div>
-            <div class="form-group">
-                <label for="inputUsed">Licznik: </label>
-                <input type="text" class="form-control" id="inputUsed" placeholder="Wprowadź wartość licznika">
-            </div>
-            <div class="form-group">
-                <label for="inputPrice">Cena: </label>
-                <input type="text" class="form-control" id="inputPrice" placeholder="Wprowadź kwotę sprzedaży">
-            </div>
-            <label for="carFuel">Paliwo:</label>
-            <select class="form-control" id="carFuel">
-                <option>Wybierz paliwo</option>
-            </select>
-            <div class="form-group">
-                <label for="inputEngine">Silnik: </label>
-                <input type="text" class="form-control" id="inputEngine" placeholder="Wprowadź pojemność silnika">
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="airConditioning">
-                <label class="form-check-label" for="airConditioning">Klimatyzacja</label>
-            </div>
-            <div>
-                <div class="form-group">
-                    <label>Wprowadź zdjęcie samochodu</label>
+            <div class="row" style="margin: 10px">
+                <div class="form-group col-6">
+                    <label for="carDealers">Salon samochodowy</label>
+                    <select class="form-control" id="carDealers">
+                        <option>Wybierz salon</option>
+                        <th:block th:each="carDealerName: ${carDealersName}">
+                            <option th:text="${carDealerName.nameOfFirm}">Marka</option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputMark">Marka: </label>
+                    <input type="text" class="form-control" id="inputMark" placeholder="Wprowadź markę">
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputModel">Model: </label>
+                    <input type="text" class="form-control" id="inputModel" placeholder="Wprowadź model">
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputYear">Rok produkcji: </label>
+                    <input type="text" class="form-control" id="inputYear" placeholder="Wprowadź rok produkcji">
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputUsed">Licznik: </label>
+                    <input type="text" class="form-control" id="inputUsed" placeholder="Wprowadź wartość licznika">
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputPrice">Cena [zł]: </label>
+                    <input type="text" class="form-control" id="inputPrice" placeholder="Wprowadź kwotę sprzedaży">
+                </div>
+                <div class="form-group col-6">
+                    <label for="carFuel">Paliwo:</label>
+                    <select class="form-control" id="carFuel">
+                        <option>Wybierz paliwo</option>
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputEngine">Silnik: </label>
+                    <input type="text" class="form-control" id="inputEngine" placeholder="Wprowadź pojemność silnika">
+                </div>
+                <div class="form-check col-2">
+                    <label class="form-check-label" for="airConditioning">Klimatyzacja</label>
+                    <input type="checkbox" class="form-check-input" id="airConditioning" style="margin-left: 0.5rem;
+                                                                                                margin-top: 0.5rem">
+                </div>
+                <div class="form-group col-10">
+                    <label class="form-check-label" for="carImage">Wprowadź zdjęcie samochodu</label>
                     <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-default btn-file">
-                                Przeglądaj… <input type="file" id="imgInp">
+                                Przeglądaj… <input type="file" id="carImage">
                             </span>
                         </span>
                         <input type="text" class="form-control" readonly>
                     </div>
-                    <img id='img-upload'/>
+                    <button>Dodaj</button>
                 </div>
             </div>
-            <button>Dodaj</button>
         </form>
     </div>
 

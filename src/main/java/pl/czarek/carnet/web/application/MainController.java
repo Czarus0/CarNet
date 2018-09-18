@@ -38,7 +38,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "/addCar", method = RequestMethod.GET)
-    public String addCar() {
+    public String addCar(Model model) {
+        model.addAttribute("carDealersName", carDealerService.getShortenInfoAboutCarDealers());
         return "addCar";
     }
 }
