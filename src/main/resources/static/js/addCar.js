@@ -22,20 +22,48 @@ $(document).ready( function() {
     });
 });
 
-var selectCarDealers = document.getElementById("carDealers");
+$('#inputUsed').on('keypress', function(ev) {
+    var keyCode = window.event ? ev.keyCode : ev.which;
+    //codes for 0-9
+    if (keyCode < 48 || keyCode > 57) {
+        //codes for backspace, delete, enter
+        if (keyCode != 0 && keyCode != 8 && keyCode != 13 && !ev.ctrlKey) {
+            ev.preventDefault();
+        }
+    }
+});
 
-var deleteDefault = function() {
-    if(selectCarDealers.selectedIndex !== 0 && selectCarDealers.options[0].text === "Wybierz salon")
-        selectCarDealers.remove(0);
+$('#inputPrice').on('keypress', function(ev) {
+    var keyCode = window.event ? ev.keyCode : ev.which;
+    //codes for 0-9
+    if (keyCode < 48 || keyCode > 57) {
+        //codes for backspace, delete, enter
+        if (keyCode != 0 && keyCode != 8 && keyCode != 13 && !ev.ctrlKey) {
+            ev.preventDefault();
+        }
+    }
+});
 
-    changeBackground();
+
+
+var deleteDefaultAndChangeBackground = function(inputLabelId, message) {
+    var selectionInput = document.getElementById(inputLabelId);
+
+    if(selectionInput.selectedIndex !== 0 && selectionInput.options[0].text === message)
+        selectionInput.remove(0);
+
+    changeBackground(inputLabelId);
+};
+
+var changeBackground = function(inputLabelId) {
+    document.getElementById(inputLabelId).classList.add("correctInputBorder")
 };
 
 var checkSelection = function() {
-    if(selectCarDealers.selectedIndex !== 0)
-        selectCarDealers.remove(0);
-};
+    var allSelectionType = document.getElementsByTagName("select");
 
-var changeBackground = function() {
-    selectCarDealers.classList.add("correctInputBorder")
-}
+    for(i = 0; i < allSelectionType.length; i++) {
+        if(allSelectionType[i].selectedIndex !== 0)
+            allSelectionType[i].remove(0);
+    }
+};
