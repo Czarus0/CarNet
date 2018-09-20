@@ -7,12 +7,14 @@
 
     <title>CarDealer</title>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/forAll.css">
     <link rel="stylesheet" href="../css/addCar.css">
 </head>
-<body>
+<body  onload="checkSelection()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-bot-50">
         <div class="container">
             <a class="navbar-brand" href="/">CarNet</a>
@@ -38,36 +40,47 @@
     </nav>
 
     <div class="container styling margin-bot-50 pad-20">
-        <form>
+        <form action="#" th:action="@{/addCar}" method="post" th:object="${carPost}">
             <div class="row" style="margin: 10px">
                 <div class="form-group col-6">
                     <label for="carDealers">Salon samochodowy</label>
-                    <select class="form-control" id="carDealers">
-                        <option>Wybierz salon</option>
-                        <th:block th:each="carDealerName: ${carDealersName}">
-                            <option th:text="${carDealerName.nameOfFirm}">Marka</option>
+                    <span th:if="${#fields.hasErrors('carDealerId')}"
+                          class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
+                    <select class="form-control" id="carDealers" th:field="*{carDealerId}"
+                            th:errorclass="wrongInputBorder" onchange="deleteDefault()">
+                        <option value="0">Wybierz salon</option>
+                        <th:block th:each="carDealer: ${carDealers}">
+                            <option th:value="${carDealer.carDealerId}"
+                                    th:text="${carDealer.nameOfFirm}">Marka</option>
                         </th:block>
                     </select>
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('carDealerId')}"
+                          th:errors="*{carDealerId}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
                     <label for="inputMark">Marka: </label>
-                    <input type="text" class="form-control" id="inputMark" placeholder="Wprowadź markę">
+                    <input type="text" class="form-control" id="inputMark"
+                           placeholder="Wprowadź markę" th:field="*{make}">
                 </div>
                 <div class="form-group col-6">
                     <label for="inputModel">Model: </label>
-                    <input type="text" class="form-control" id="inputModel" placeholder="Wprowadź model">
+                    <input type="text" class="form-control" id="inputModel"
+                           placeholder="Wprowadź model" th:field="*{model}">
                 </div>
                 <div class="form-group col-6">
                     <label for="inputYear">Rok produkcji: </label>
-                    <input type="text" class="form-control" id="inputYear" placeholder="Wprowadź rok produkcji">
+                    <input type="text" class="form-control" id="inputYear"
+                           placeholder="Wprowadź rok produkcji" th:field="*{yearOfProduction}">
                 </div>
                 <div class="form-group col-6">
                     <label for="inputUsed">Licznik: </label>
-                    <input type="text" class="form-control" id="inputUsed" placeholder="Wprowadź wartość licznika">
+                    <input type="text" class="form-control" id="inputUsed"
+                           placeholder="Wprowadź wartość licznika" th:field="*{used}">
                 </div>
                 <div class="form-group col-6">
                     <label for="inputPrice">Cena [zł]: </label>
-                    <input type="text" class="form-control" id="inputPrice" placeholder="Wprowadź kwotę sprzedaży">
+                    <input type="text" class="form-control" id="inputPrice"
+                           placeholder="Wprowadź kwotę sprzedaży" th:field="*{price}">
                 </div>
                 <div class="form-group col-6">
                     <label for="carFuel">Paliwo:</label>
@@ -77,26 +90,28 @@
                 </div>
                 <div class="form-group col-6">
                     <label for="inputEngine">Silnik: </label>
-                    <input type="text" class="form-control" id="inputEngine" placeholder="Wprowadź pojemność silnika">
+                    <input type="text" class="form-control" id="inputEngine"
+                           placeholder="Wprowadź pojemność silnika" th:field="*{engine}">
                 </div>
-                <div class="form-check col-2">
+                <div class="form-check col-4">
                     <label class="form-check-label" for="airConditioning">Klimatyzacja</label>
-                    <input type="checkbox" class="form-check-input" id="airConditioning" style="margin-left: 0.5rem;
-                                                                                                margin-top: 0.5rem">
+                    <input type="checkbox" class="form-check-input" id="airConditioning"
+                           style="margin-left: 0.5rem; margin-top: 0.5rem" th:field="*{airConditioning}">
                 </div>
-                <div class="form-group col-10">
-                    <label class="form-check-label" for="carImage">Wprowadź zdjęcie samochodu</label>
+                <div class="form-group col-8">
                     <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default btn-file">
-                                Przeglądaj… <input type="file" id="carImage">
+                        <label class="input-group-btn">
+                            <span class="btn btn-primary btn-grey">
+                                Przeglądaj...<input type="file" style="display: none;" multiple>
                             </span>
-                        </span>
+                        </label>
                         <input type="text" class="form-control" readonly>
                     </div>
-                    <button>Dodaj</button>
                 </div>
             </div>
+            <span class="btn btn-primary btn-grey">
+                Prześlij<input type="submit" value="Submit">
+            </span>
         </form>
     </div>
 
