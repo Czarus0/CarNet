@@ -27,9 +27,15 @@ var selectCarDealers = document.getElementById("carDealers");
 var deleteDefault = function() {
     if(selectCarDealers.selectedIndex !== 0 && selectCarDealers.options[0].text === "Wybierz salon")
         selectCarDealers.remove(0);
+
+    changeBackground();
 };
 
 var checkSelection = function() {
     if(selectCarDealers.selectedIndex !== 0)
         selectCarDealers.remove(0);
 };
+
+var changeBackground = function() {
+    selectCarDealers.classList.add("correctInputBorder")
+}

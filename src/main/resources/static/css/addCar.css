@@ -30,6 +30,16 @@
 
 .wrongInputBorder {
     border-color: red;
+    background-color: #ffc2b8;
+}
+
+.correctInputBorder {
+    background-color: white;
+}
+
+
+.wrongInputBackground {
+    background-color: #ffc2b8;
 }
 
 .wrongInputText {
