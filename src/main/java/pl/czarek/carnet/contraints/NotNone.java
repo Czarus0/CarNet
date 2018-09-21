@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = NotBlankLongValidator.class)
-public @interface NotBlankLong {
+@Constraint(validatedBy = NotNoneValidator.class)
+public @interface NotNone {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String message() default "Nie może być puste pole";
+    String message() default "Nie może być wartość \'none\'";
 }

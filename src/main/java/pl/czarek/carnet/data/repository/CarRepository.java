@@ -11,6 +11,5 @@ public interface CarRepository extends PagingAndSortingRepository<Car, Long> {
     Car findByCarId(Long CarId);
     List<Car> findByCarDealerId(Long carDealerId);
     List<Car> findByMake(String make);
-    List<Car> findByModel(String model);
     List<Car> findByMakeAndModel(String make, String model);
 }

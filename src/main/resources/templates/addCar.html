@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../css/forAll.css">
     <link rel="stylesheet" href="../css/addCar.css">
 </head>
-<body  onload="checkSelection()">
+<body onload="checkSelection()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-bot-50">
         <div class="container">
             <a class="navbar-brand" href="/">CarNet</a>
@@ -110,7 +110,10 @@
                 </div>
                 <div class="form-group col-6">
                     <label for="carFuel">Paliwo</label>
-                    <select class="form-control" id="carFuel"
+                    <span th:if="${#fields.hasErrors('fuel')}"
+                          class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
+                    <select class="form-control" id="carFuel" th:field="*{fuel}"
+                            th:errorclass="wrongInputBorder"
                             onchange="deleteDefaultAndChangeBackground('carFuel', 'Wybierz paliwo')">
                         <option value="none">Wybierz paliwo</option>
                         <option th:each="fuelEnum : ${T(pl.czarek.carnet.data.entity.Fuel).getFuels()}"
@@ -118,11 +121,18 @@
                                 th:text="${fuelEnum.getTypeOfFuel()}">
                         </option>
                     </select>
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('fuel')}"
+                          th:errors="*{fuel}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
-                    <label for="inputEngine">Silnik</label>
+                    <label for="inputEngine">Silnik [dm3]</label>
+                    <span th:if="${#fields.hasErrors('engine')}"
+                          class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
                     <input type="text" class="form-control" id="inputEngine"
-                           placeholder="Wprowadź pojemność silnika" th:field="*{engine}">
+                           placeholder="Wprowadź pojemność silnika" th:field="*{engine}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputEngine')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('engine')}"
+                          th:errors="*{engine}">Name Error</span>
                 </div>
                 <div class="form-check col-4">
                     <label class="form-check-label" for="airConditioning">Klimatyzacja</label>
@@ -133,16 +143,17 @@
                     <div class="input-group">
                         <label class="input-group-btn">
                             <span class="btn btn-primary btn-grey">
-                                Przeglądaj...<input type="file" style="display: none;" multiple>
+                                Przeglądaj...<input type="file" style="display: none;" name="file"
+                                                    accept="image/x-png,image/gif,image/jpeg" th:field="*{carImage}">
                             </span>
                         </label>
                         <input type="text" class="form-control" readonly>
                     </div>
                 </div>
+                <div class="col-12" style="text-align: center">
+                    <input type="submit" value="Prześlij" class="btn btn-primary btn-lg btn-grey">
+                </div>
             </div>
-            <span class="btn btn-primary btn-grey">
-                Prześlij<input type="submit" value="Submit">
-            </span>
         </form>
     </div>
 

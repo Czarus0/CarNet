@@ -49,19 +49,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">Rocznik:</th>
+                            <th scope="row">Rok produkcji:</th>
                             <td th:text="${car.yearOfProduction}">Rok produkcji</td>
                         </tr>
                         <tr>
                             <th scope="row">Licznik:</th>
-                            <td th:text="${car.used}">Na liczniku</td>
+                            <td th:text="${car.used} + ' km'">Na liczniku</td>
                         </tr>
                         <tr>
                             <th class="price" colspan="2" scope="row" th:text="${car.price} + 'zł'">Cena</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">Rok produkcji:</th>
-                            <td th:text="${car.yearOfProduction}">Rok produkcji</td>
                         </tr>
                         <tr>
                             <th scope="row">Rodzaj paliwa:</th>
@@ -74,7 +70,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Silnik:</th>
-                            <td th:text="${car.engine}">Pojemność silnika</td>
+                            <td th:text="${car.engine} + ' dm3'">Pojemność silnika</td>
                         </tr>
                         <tr>
                             <th scope="row">Dodatki:</th>

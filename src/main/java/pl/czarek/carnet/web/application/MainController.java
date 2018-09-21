@@ -8,15 +8,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.czarek.carnet.business.domain.CarPost;
 import pl.czarek.carnet.business.domain.ShortInfoCarDealer;
 import pl.czarek.carnet.business.domain.SmallInfoCar;
 import pl.czarek.carnet.business.service.CarDealerService;
+import pl.czarek.carnet.business.service.CarPostService;
 import pl.czarek.carnet.business.service.CarService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 public class MainController {
@@ -24,6 +30,8 @@ public class MainController {
     private CarDealerService carDealerService;
     @Autowired
     private CarService carService;
+    @Autowired
+    private CarPostService carPostService;
 
     @RequestMapping(value = {"/home", "/homepage"})
     public String goToHomePage() {
@@ -33,6 +41,7 @@ public class MainController {
     @RequestMapping(value = "/main")
     public String goToMainPage(Model model) {
         model.addAttribute("shortInfoCarDealers", carDealerService.getShortenInfoAboutCarDealers());
+        model.addAttribute("messageAddition", null);
         return "main";
     }
 
@@ -66,13 +75,7 @@ public class MainController {
                     bindingResult);
             return "redirect:/addCar";
         } else {
-            System.out.println(carPost.getMake() + " " + carPost.getModel());
-            System.out.println(carPost.getCarDealerId());
-            System.out.println(carPost.getEngine());
-            System.out.println(carPost.getPrice());
-            System.out.println(carPost.getUsed());
-            System.out.println(carPost.getYearOfProduction());
-            System.out.println(carPost.isAirConditioning());
+            carPostService.saveCar(carPost);
         }
 
         return "redirect:/main";

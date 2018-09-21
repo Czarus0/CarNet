@@ -1,6 +1,6 @@
 package pl.czarek.carnet.business.domain;
 
-import pl.czarek.carnet.data.entity.Fuel;
+import pl.czarek.carnet.contraints.NotNone;
 
 import javax.validation.constraints.*;
 
@@ -18,11 +18,10 @@ public class CarPost {
     private String used;
     @Size(min = 1, max = 9, message = "Cena musi zawierać od 1 do 9 cyfr")
     private String price;
-    
-    private Fuel fuel;
-    @NotNull
-    @DecimalMin(value = "0.0")
-    private float engine;
+    @NotNone(message = "Nie może zostać niewybrana wartość")
+    private String fuel;
+    @Pattern(regexp = "[0-9]+.[0-9]", message = "Wartość musi być np. 1.1")
+    private String engine;
     private boolean airConditioning;
     private String carImage;
 
@@ -74,19 +73,19 @@ public class CarPost {
         this.price = price;
     }
 
-    public Fuel getFuel() {
+    public String getFuel() {
         return fuel;
     }
 
-    public void setFuel(Fuel fuel) {
+    public void setFuel(String fuel) {
         this.fuel = fuel;
     }
 
-    public float getEngine() {
+    public String getEngine() {
         return engine;
     }
 
-    public void setEngine(float engine) {
+    public void setEngine(String engine) {
         this.engine = engine;
     }
 
