@@ -77,6 +77,8 @@
                 <td th:text="${car.yearOfProduction}">Rok produkcji</td>
                 <td th:text="${car.price} + 'zł'">Cena</td>
                 <td th:text="${car.carDealerName}">Nazwa formy</td>
+                <td><a th:href="@{'/cardealers/' + ${car.carDealerId} + '/cars/' + ${car.carId}}"
+                       class="btn btn-info" role="button">Więcej</a></td>
             </tr>
         </tbody>
     </table>

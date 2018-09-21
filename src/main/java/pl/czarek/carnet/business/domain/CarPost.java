@@ -15,8 +15,10 @@ public class CarPost {
     @Min(value = 1900, message = "Nie można dać roku produkcji mniejszego niż 1900")
     private String yearOfProduction;
     @Size(min = 1, max = 9, message = "Przebieg musi zawierać od 1 do 9 cyfr")
+    @Pattern(regexp = "[1-9][0-9]*", message = "Mogą być tylko cyfry i nie może zaczynać się od 0")
     private String used;
     @Size(min = 1, max = 9, message = "Cena musi zawierać od 1 do 9 cyfr")
+    @Pattern(regexp = "[1-9][0-9]*", message = "Mogą być tylko cyfry i nie może zaczynać się od 0")
     private String price;
     @NotNone(message = "Nie może zostać niewybrana wartość")
     private String fuel;
