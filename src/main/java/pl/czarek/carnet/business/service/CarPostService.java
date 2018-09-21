@@ -22,7 +22,7 @@ public class CarPostService {
         this.carRepository = carRepository;
     }
 
-    public void saveCar(CarPost carPost) {
+    public long saveCar(CarPost carPost) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.HALF_UP);
@@ -37,12 +37,10 @@ public class CarPostService {
         newCar.setEngine(((float) Math.round(Float.parseFloat(carPost.getEngine()) * 10)) / 10);
         newCar.setFuel(Fuel.valueOf(carPost.getFuel()));
         newCar.setAirConditioning(carPost.isAirConditioning());
-        if(carPost.getCarImage().equals(""))
-            newCar.setCarImage(null);
-        else
-            newCar.setCarImage(carPost.getCarImage());
         newCar.setDatePosted(LocalDate.now().format(dateTimeFormatter));
 
         carRepository.save(newCar);
+
+        return newCar.getCarId();
     }
 }

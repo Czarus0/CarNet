@@ -69,15 +69,17 @@ public class MainController {
     @RequestMapping(value = "/addCar", method = RequestMethod.POST)
     public String processAddCar(@ModelAttribute(value = "carPost") @Valid CarPost carPost,
                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        long carId = 0;
+
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("carPost", carPost);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.carPost",
                     bindingResult);
             return "redirect:/addCar";
         } else {
-            carPostService.saveCar(carPost);
+            carId = carPostService.saveCar(carPost);
         }
 
-        return "redirect:/main";
+        return "redirect:/cardealers/" + carPost.getCarDealerId() + "/cars/" + carId;
     }
 }
