@@ -2,7 +2,7 @@ package pl.czarek.carnet.business.domain;
 
 import pl.czarek.carnet.data.entity.Fuel;
 
-public class CarInCarDealer {
+public class CarGet {
     private long carId;
     private String make;
     private String model;

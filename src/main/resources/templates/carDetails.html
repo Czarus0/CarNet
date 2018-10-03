@@ -86,6 +86,11 @@
             <div class="col-8">
                 <img class="img-background" th:src="${car.carImage} ? ${car.carImage} : '/img/cars/none_car.jpg'">
             </div>
+
+            <form method="POST" th:action="'/car/' + ${car.carId}" enctype="multipart/form-data">
+                <input type="file" name="imageFile" /><br/><br/>
+                <input type="submit" value="Submit" />
+            </form>
         </div>
     </div>
 

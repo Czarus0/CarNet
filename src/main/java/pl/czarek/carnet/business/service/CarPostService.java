@@ -9,7 +9,6 @@ import pl.czarek.carnet.data.repository.CarRepository;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

@@ -22,7 +22,7 @@ public class CarPost {
     private String price;
     @NotNone(message = "Nie może zostać niewybrana wartość")
     private String fuel;
-    @Pattern(regexp = "[0-9]+.[0-9]", message = "Wartość musi być np. 1.1")
+    @Pattern(regexp = "([1-9]+.[0-9])|(0.[1-9])", message = "Wartość musi być np. 1.1 i większa od 0.0")
     private String engine;
     private boolean airConditioning;
     private String carImage;

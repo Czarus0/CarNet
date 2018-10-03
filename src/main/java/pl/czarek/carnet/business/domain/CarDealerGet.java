@@ -1,6 +1,6 @@
 package pl.czarek.carnet.business.domain;
 
-public class ShortInfoCarDealer {
+public class CarDealerGet {
     private long carDealerId;
     private String nameOfFirm;
     private String phoneNumber;

@@ -48,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="carDealer: ${shortInfoCarDealers}">
+                <tr th:each="carDealer: ${listOfCarDealer}">
                     <th scope="row" th:text="${carDealer.nameOfFirm}">Nazwa firmy</th>
                     <td th:text="${carDealer.street} + ' ' + ${carDealer.numberHome} + ', ' + ${carDealer.city}
                     + ', ' + ${carDealer.country}">Adres firmy</td>

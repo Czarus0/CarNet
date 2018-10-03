@@ -2,8 +2,7 @@ package pl.czarek.carnet.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.czarek.carnet.business.domain.CarInCarDealer;
-import pl.czarek.carnet.business.domain.SmallInfoCar;
+import pl.czarek.carnet.business.domain.CarGet;
 import pl.czarek.carnet.data.entity.Car;
 import pl.czarek.carnet.data.entity.CarDealer;
 import pl.czarek.carnet.data.repository.CarDealerRepository;
@@ -22,59 +21,34 @@ public class CarService {
         this.carDealerRepository = carDealerRepository;
     }
 
-    public CarInCarDealer getDetailCarInformation(Long carId) {
-        Car car = this.carRepository.findByCarId(carId);
-        CarInCarDealer carInCarDealer = new CarInCarDealer();
-
-        carInCarDealer.setCarId(car.getCarId());
-        carInCarDealer.setMake(car.getMake());
-        carInCarDealer.setModel(car.getModel());
-        carInCarDealer.setYearOfProduction(car.getYearOfProduction());
-        carInCarDealer.setUsed(car.getUsed());
-        carInCarDealer.setPrice(car.getPrice());
-        carInCarDealer.setFuel(car.getFuel());
-        carInCarDealer.setEngine(car.getEngine());
-        carInCarDealer.setAirConditioning(car.isAirConditioning());
-        carInCarDealer.setDatePosted(car.getDatePosted());
-        carInCarDealer.setDateSold(car.getDateSold());
-        carInCarDealer.setCarImage(car.getCarImage());
-
-        CarDealer carDealer = this.carDealerRepository.findByCarDealerId(car.getCarDealerId());
-        if(carDealer != null) {
-            carInCarDealer.setCarDealerId(car.getCarDealerId());
-            carInCarDealer.setNameOfFirm(carDealer.getNameOfFirm());
-            carInCarDealer.setPhoneNumber(carDealer.getPhoneNumber());
-            carInCarDealer.setOpenFrom(carDealer.getOpenFrom());
-            carInCarDealer.setOpenTo(carDealer.getOpenTo());
-        }
-
-        return carInCarDealer;
+    public CarGet getCar(Long carId) {
+        return this.getCarFromRepo(carId);
     }
 
-    public List<SmallInfoCar> getSmallInfoCars(String make, String model) {
-        List<SmallInfoCar> smallInfoCars = new ArrayList<>();
+    public List<CarGet> getCarsByMakeOrModel(String make, String model) {
+        List<CarGet> listOfCarGet = new ArrayList<>();
 
         if(make != null && model != null) {
             List<Car> cars = this.carRepository.findByMakeAndModel(make, model);
             cars.forEach(car -> {
-                SmallInfoCar smallInfoCar = setAllDataSmallInfoCar(car);
-                smallInfoCars.add(smallInfoCar);
+                CarGet carGet = getCarFromRepo(car.getCarId());
+                listOfCarGet.add(carGet);
             });
         } else if(make != null) {
             List<Car> cars = this.carRepository.findByMake(make);
             cars.forEach(car -> {
-                SmallInfoCar smallInfoCar = setAllDataSmallInfoCar(car);
-                smallInfoCars.add(smallInfoCar);
+                CarGet carGet = getCarFromRepo(car.getCarId());
+                listOfCarGet.add(carGet);
             });
         } else {
             Iterable<Car> cars = this.carRepository.findAll();
             cars.forEach(car -> {
-                SmallInfoCar smallInfoCar = setAllDataSmallInfoCar(car);
-                smallInfoCars.add(smallInfoCar);
+                CarGet carGet = getCarFromRepo(car.getCarId());
+                listOfCarGet.add(carGet);
             });
         }
 
-        return smallInfoCars;
+        return listOfCarGet;
     }
 
     public List<String> getAllMakes() {
@@ -93,19 +67,33 @@ public class CarService {
         return List.copyOf(models);
     }
 
-    private SmallInfoCar setAllDataSmallInfoCar(Car car) {
-        SmallInfoCar smallInfoCar = new SmallInfoCar();
-        smallInfoCar.setCarId(car.getCarId());
-        smallInfoCar.setMake(car.getMake());
-        smallInfoCar.setModel(car.getModel());
-        smallInfoCar.setYearOfProduction(car.getYearOfProduction());
-        smallInfoCar.setPrice(car.getPrice());
-        smallInfoCar.setCarDealerId(car.getCarDealerId());
+
+    private CarGet getCarFromRepo(Long carId) {
+        Car car = this.carRepository.findByCarId(carId);
+        CarGet carGet = new CarGet();
+
+        carGet.setCarId(car.getCarId());
+        carGet.setMake(car.getMake());
+        carGet.setModel(car.getModel());
+        carGet.setYearOfProduction(car.getYearOfProduction());
+        carGet.setUsed(car.getUsed());
+        carGet.setPrice(car.getPrice());
+        carGet.setFuel(car.getFuel());
+        carGet.setEngine(car.getEngine());
+        carGet.setAirConditioning(car.isAirConditioning());
+        carGet.setDatePosted(car.getDatePosted());
+        carGet.setDateSold(car.getDateSold());
+        carGet.setCarImage(car.getCarImage());
+
         CarDealer carDealer = this.carDealerRepository.findByCarDealerId(car.getCarDealerId());
+        if(carDealer != null) {
+            carGet.setCarDealerId(car.getCarDealerId());
+            carGet.setNameOfFirm(carDealer.getNameOfFirm());
+            carGet.setPhoneNumber(carDealer.getPhoneNumber());
+            carGet.setOpenFrom(carDealer.getOpenFrom());
+            carGet.setOpenTo(carDealer.getOpenTo());
+        }
 
-        if(carDealer != null)
-            smallInfoCar.setCarDealerName(carDealer.getNameOfFirm());
-
-        return smallInfoCar;
+        return carGet;
     }
 }

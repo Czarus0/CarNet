@@ -18,9 +18,8 @@ public class CarDealersController {
 
     @RequestMapping(value = "/{id}")
     public String getCarDealer(@PathVariable(value = "id") Long carDealerId, Model model) {
-        model.addAttribute("carDealer",
-                carDealerService.getShortenInfoAboutCarDealer(carDealerId));
-        model.addAttribute("cars", carDealerService.getCarsBelongingToShortInfoCarDealer(carDealerId));
+        model.addAttribute("carDealer", carDealerService.getCarDealer(carDealerId));
+        model.addAttribute("cars", carDealerService.getCarsOfCarDealer(carDealerId));
         return "carDealer";
     }
 

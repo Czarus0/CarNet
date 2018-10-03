@@ -2,7 +2,7 @@ package pl.czarek.carnet.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.czarek.carnet.business.domain.ShortInfoCarDealer;
+import pl.czarek.carnet.business.domain.CarDealerGet;
 import pl.czarek.carnet.data.entity.Address;
 import pl.czarek.carnet.data.entity.Car;
 import pl.czarek.carnet.data.entity.CarDealer;
@@ -27,45 +27,42 @@ public class CarDealerService {
         this.addressRepository = addressRepository;
     }
 
-    public List<ShortInfoCarDealer> getShortenInfoAboutCarDealers() {
-        List<ShortInfoCarDealer> shortInfoCarDealers = new ArrayList<>();
+    public List<CarDealerGet> getCarDealers() {
+        List<CarDealerGet> listOfCarDealerGet = new ArrayList<>();
         Iterable<CarDealer> carDealers = this.carDealerRepository.findAll();
-        carDealers.forEach(carDealer -> {
-            ShortInfoCarDealer shortInfoCarDealer = getShortInfoCarDealerFromCarDealer(carDealer);
-            shortInfoCarDealers.add(shortInfoCarDealer);
-        });
-
-        return shortInfoCarDealers;
+        
+        carDealers.forEach(carDealer -> listOfCarDealerGet.add(this.getCarDealerFromRepo(carDealer)));
+        
+        return listOfCarDealerGet;
     }
 
-    public ShortInfoCarDealer getShortenInfoAboutCarDealer(Long carDealerId) {
-        CarDealer carDealer = this.carDealerRepository.findByCarDealerId(carDealerId);
-        return getShortInfoCarDealerFromCarDealer(carDealer);
+    public CarDealerGet getCarDealer(Long carDealerId) {
+        return this.getCarDealerFromRepo(this.carDealerRepository.findByCarDealerId(carDealerId));
     }
-
-    public List<Car> getCarsBelongingToShortInfoCarDealer(Long carDealerId) {
-        return this.carRepository.findByCarDealerId(carDealerId);
-    }
-
-    private ShortInfoCarDealer getShortInfoCarDealerFromCarDealer(CarDealer carDealer) {
-        ShortInfoCarDealer shortInfoCarDealer = new ShortInfoCarDealer();
-        shortInfoCarDealer.setCarDealerId(carDealer.getCarDealerId());
-        shortInfoCarDealer.setNameOfFirm(carDealer.getNameOfFirm());
-        shortInfoCarDealer.setPhoneNumber(carDealer.getPhoneNumber());
-        shortInfoCarDealer.setOpenFrom(carDealer.getOpenFrom());
-        shortInfoCarDealer.setOpenTo(carDealer.getOpenTo());
-        shortInfoCarDealer.setCarDealerImage(carDealer.getCarDealerImage());
+    
+    private CarDealerGet getCarDealerFromRepo(CarDealer carDealer) {
+        CarDealerGet carDealerGet = new CarDealerGet();
+        carDealerGet.setCarDealerId(carDealer.getCarDealerId());
+        carDealerGet.setNameOfFirm(carDealer.getNameOfFirm());
+        carDealerGet.setPhoneNumber(carDealer.getPhoneNumber());
+        carDealerGet.setOpenFrom(carDealer.getOpenFrom());
+        carDealerGet.setOpenTo(carDealer.getOpenTo());
+        carDealerGet.setCarDealerImage(carDealer.getCarDealerImage());
 
         Address address = this.addressRepository.findByAddressId(carDealer.getAddressId());
         if(address != null) {
-            shortInfoCarDealer.setAddressId(carDealer.getAddressId());
-            shortInfoCarDealer.setStreet(address.getStreet());
-            shortInfoCarDealer.setNumberHome(address.getNumberHome());
-            shortInfoCarDealer.setPostCode(address.getPostCode());
-            shortInfoCarDealer.setCity(address.getCity());
-            shortInfoCarDealer.setCountry(address.getCountry());
+            carDealerGet.setAddressId(carDealer.getAddressId());
+            carDealerGet.setStreet(address.getStreet());
+            carDealerGet.setNumberHome(address.getNumberHome());
+            carDealerGet.setPostCode(address.getPostCode());
+            carDealerGet.setCity(address.getCity());
+            carDealerGet.setCountry(address.getCountry());
         }
 
-        return shortInfoCarDealer;
+        return carDealerGet;
+    }
+    
+    public List<Car> getCarsOfCarDealer(Long carDealerId) {
+        return this.carRepository.findByCarDealerId(carDealerId);
     }
 }
