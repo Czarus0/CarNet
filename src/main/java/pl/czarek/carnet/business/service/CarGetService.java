@@ -11,12 +11,12 @@ import pl.czarek.carnet.data.repository.CarRepository;
 import java.util.*;
 
 @Service
-public class CarService {
+public class CarGetService {
     private CarRepository carRepository;
     private CarDealerRepository carDealerRepository;
 
     @Autowired
-    public CarService(CarRepository carRepository, CarDealerRepository carDealerRepository) {
+    public CarGetService(CarRepository carRepository, CarDealerRepository carDealerRepository) {
         this.carRepository = carRepository;
         this.carDealerRepository = carDealerRepository;
     }

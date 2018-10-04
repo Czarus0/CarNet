@@ -2,6 +2,7 @@ package pl.czarek.carnet.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.czarek.carnet.business.domain.CarGet;
 import pl.czarek.carnet.business.domain.CarPost;
 import pl.czarek.carnet.data.entity.Car;
 import pl.czarek.carnet.data.entity.Fuel;
@@ -41,5 +42,12 @@ public class CarPostService {
         carRepository.save(newCar);
 
         return newCar.getCarId();
+    }
+
+    public void updateImageCar(Long carId, String path) {
+        Car updateCar = carRepository.findByCarId(carId);
+        updateCar.setCarImage(path);
+
+        carRepository.save(updateCar);
     }
 }
