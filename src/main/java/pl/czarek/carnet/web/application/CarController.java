@@ -12,7 +12,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.czarek.carnet.business.service.CarGetService;
 import pl.czarek.carnet.business.service.CarPostService;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,20 +41,44 @@ public class CarController {
                                     RedirectAttributes redirectAttributes) {
         if(imageFile.isEmpty()) {
             redirectAttributes.addFlashAttribute("message",
-                    "Please select an image to upload");
+                    "Proszę wybrać zdjęcie samochodu");
+            System.out.println("brak wybranego zdjęcia");
             return "redirect:/car/" + carId;
         }
 
+        if(!imageFile.getOriginalFilename().endsWith(".jpg")) {
+            redirectAttributes.addFlashAttribute("message",
+                    "Plik musi mieć rozszerzenie .jpg");
+            System.out.println("złe rozszerzenie: " + imageFile.getOriginalFilename());
+            return "redirect:/car/" + carId;
+        }
         //Zrobić walidację, aby przyjmować tylko pliki .jpg i o formacie 1920x1080, nie większe niż 2MB
 
         try {
+            BufferedImage image = ImageIO.read(imageFile.getInputStream());
+
+            if(image.getHeight() != 1080 || image.getWidth() != 1920) {
+                redirectAttributes.addFlashAttribute("message",
+                        "Zdjęcie musi być wymiarów 1920x1080");
+                System.out.println("złe wymiary");
+                return "redirect:/car/" + carId;
+            }
+
             byte[] bytes = imageFile.getBytes();
             String pathToUploadedImage = System.getProperty("user.dir") +
                     "/out/production/resources/static/img/cars/" + carId;
             File newDirectory = new File(pathToUploadedImage);
-            newDirectory.mkdir();
 
-            Path path = Paths.get(pathToUploadedImage + "/car-main.jpg");
+            String pathToImage = pathToUploadedImage + "/car-main.jpg";
+
+            if(!newDirectory.mkdir()) {
+                new File(pathToImage).delete();
+                System.out.println("Podmiana zdjęcia");
+            }
+
+            //Musi usuwać cache!
+
+            Path path = Paths.get(pathToImage);
             Files.write(path, bytes);
 
             carPostService.updateImageCar(carId, "/img/cars/" + carId + "/car-main.jpg");
