@@ -11,15 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.czarek.carnet.business.service.CarGetService;
 import pl.czarek.carnet.business.service.CarPostService;
-
-import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import pl.czarek.carnet.tools.ImageSaver;
+import pl.czarek.carnet.tools.ImageValidation;
 
 @Controller
 @RequestMapping(value = "/car")
@@ -39,57 +32,25 @@ public class CarController {
     public String singleImageUpload(@PathVariable(value = "carId") Long carId,
                                     @RequestParam("imageFile") MultipartFile imageFile,
                                     RedirectAttributes redirectAttributes) {
-        if(imageFile.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message",
-                    "Proszę wybrać zdjęcie samochodu");
-            System.out.println("brak wybranego zdjęcia");
+        ImageValidation imageValidation = new ImageValidation(imageFile);
+        ImageSaver saver = new ImageSaver(imageFile);
+
+        if(!imageValidation.validImage()) {
+            redirectAttributes.addFlashAttribute("message", imageValidation.getMessage());
             return "redirect:/car/" + carId;
-        }
-
-        if(!imageFile.getOriginalFilename().endsWith(".jpg")) {
-            redirectAttributes.addFlashAttribute("message",
-                    "Plik musi mieć rozszerzenie .jpg");
-            System.out.println("złe rozszerzenie: " + imageFile.getOriginalFilename());
-            return "redirect:/car/" + carId;
-        }
-        //Zrobić walidację, aby przyjmować tylko pliki .jpg i o formacie 1920x1080, nie większe niż 2MB
-
-        try {
-            BufferedImage image = ImageIO.read(imageFile.getInputStream());
-
-            if(image.getHeight() != 1080 || image.getWidth() != 1920) {
-                redirectAttributes.addFlashAttribute("message",
-                        "Zdjęcie musi być wymiarów 1920x1080");
-                System.out.println("złe wymiary");
+        } else {
+            if(!saver.writeFile(carId)) {
+                redirectAttributes.addFlashAttribute("message", imageValidation.getMessage());
                 return "redirect:/car/" + carId;
             }
-
-            byte[] bytes = imageFile.getBytes();
-            String pathToUploadedImage = System.getProperty("user.dir") +
-                    "/out/production/resources/static/img/cars/" + carId;
-            File newDirectory = new File(pathToUploadedImage);
-
-            String pathToImage = pathToUploadedImage + "/car-main.jpg";
-
-            if(!newDirectory.mkdir()) {
-                new File(pathToImage).delete();
-                System.out.println("Podmiana zdjęcia");
-            }
-
-            //Musi usuwać cache!
-
-            Path path = Paths.get(pathToImage);
-            Files.write(path, bytes);
-
-            carPostService.updateImageCar(carId, "/img/cars/" + carId + "/car-main.jpg");
-
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + imageFile.getOriginalFilename() + "'");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        String newCarImage = saver.getNewNameOfFile();
+        carPostService.updateImageCar(carId, "/img/cars/" + carId + "/" + newCarImage);
+
+        redirectAttributes.addFlashAttribute("message",
+                "Udało się wgrać nowe zdjęcie Twojego samochodu");
 
         return "redirect:/car/" + carId;
     }
-
 }
