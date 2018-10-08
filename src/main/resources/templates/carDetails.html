@@ -84,22 +84,22 @@
             </div>
             <div class="col-8">
                 <img class="img-background" th:src="${car.carImage} ? ${car.carImage} : '/img/cars/none_car.jpg'">
-            </div>
 
-            <form method="POST" th:action="'/car/' + ${car.carId}" enctype="multipart/form-data">
-                <div class="file-upload">
-                    <div class="file-select">
-                        <div class="file-select-button" id="fileName">Wybierz plik</div>
-                        <div class="file-select-name" id="noFile">Nie wybrano pliku</div>
-                        <input type="file" name="imageFile" id="imageFile">
+                <form method="POST" th:action="'/car/' + ${car.carId}" enctype="multipart/form-data">
+                    <div class="file-upload">
+                        <div class="file-select">
+                            <div class="file-select-button" id="fileName">Wybierz plik</div>
+                            <div class="file-select-name" id="noFile">Nie wybrano pliku</div>
+                            <input type="file" name="imageFile" id="imageFile">
+                        </div>
+                        <div class="file-submit">
+                            <div class="file-submit-button" id="submit">Wyślij</div>
+                            <input type="submit" value="Submit" />
+                            <!--Trzeba załatać dziurę między przyciskami i uporządkować to-->
+                        </div>
                     </div>
-                    <div class="file-submit" style="">
-                        <div class="file-submit-button" id="submit">Wyślij</div>
-                        <input type="submit" value="Submit" />
-                        <!--Trzeba kombinować z width-->
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
 
             <span th:if="${message}" th:text="${message}" class="wrongInputIcon">ello</span>
         </div>
