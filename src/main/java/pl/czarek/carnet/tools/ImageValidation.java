@@ -7,9 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ImageValidation {
+    private static final long IMAGE_SIZE = 2621440;
+
     private String message;
     private MultipartFile file;
-
 
     public ImageValidation(MultipartFile file) {
         this.file = file;
