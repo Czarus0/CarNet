@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CarDealerService {
+public class CarDealerGetService {
     private CarRepository carRepository;
     private CarDealerRepository carDealerRepository;
     private AddressRepository addressRepository;
 
     @Autowired
-    public CarDealerService(CarRepository carRepository, CarDealerRepository carDealerRepository,
-                            AddressRepository addressRepository) {
+    public CarDealerGetService(CarRepository carRepository, CarDealerRepository carDealerRepository,
+                               AddressRepository addressRepository) {
         this.carRepository = carRepository;
         this.carDealerRepository = carDealerRepository;
         this.addressRepository = addressRepository;

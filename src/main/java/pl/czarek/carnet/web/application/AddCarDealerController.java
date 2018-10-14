@@ -1,7 +1,6 @@
 package pl.czarek.carnet.web.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,17 +13,16 @@ import pl.czarek.carnet.business.service.CarPostService;
 
 import javax.validation.Valid;
 
-@Controller
-public class AddCarController {
+public class AddCarDealerController {
     @Autowired
     private CarDealerGetService carDealerGetService;
     @Autowired
     private CarPostService carPostService;
 
-    @RequestMapping(value = "/addCar", method = RequestMethod.GET)
-    public String addCar(Model model) {
-        if (!model.containsAttribute("carPost")) {
-            model.addAttribute("carPost", new CarPost());
+    @RequestMapping(value = "/addCarDealer", method = RequestMethod.GET)
+    public String addCarDealer(Model model) {
+        if (!model.containsAttribute("carDealerPost")) {
+            model.addAttribute("carDealerPost", new CarPost());
         }
 
         model.addAttribute("carDealers", carDealerGetService.getCarDealers());
@@ -32,7 +30,7 @@ public class AddCarController {
         return "addCar";
     }
 
-    @RequestMapping(value = "/addCar", method = RequestMethod.POST)
+    @RequestMapping(value = "/addCarDealer", method = RequestMethod.POST)
     public String processAddCar(@ModelAttribute(value = "carPost") @Valid CarPost carPost,
                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         long carId = 0;
