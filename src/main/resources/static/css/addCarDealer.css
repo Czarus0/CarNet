@@ -1,0 +1,32 @@
+.btn-grey {
+    background-color: #343a40;
+    border-color: black;
+}
+
+.btn-grey:hover {
+    background-color: black;
+    border-color: white;
+}
+
+.wrongInputBorder {
+    border-color: red;
+    background-color: #ffc2b8;
+}
+
+.correctInputBorder {
+    background-color: white;
+}
+
+
+.wrongInputBackground {
+    background-color: #ffc2b8;
+}
+
+.wrongInputText {
+    color: red;
+    font-size: 0.7rem;
+}
+
+.wrongInputIcon {
+    color: red;
+}
