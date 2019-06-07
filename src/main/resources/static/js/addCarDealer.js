@@ -1,4 +1,4 @@
-$('#inputUsed').on('keypress', function(ev) {
+$('#inputOpenFrom').on('keypress', function(ev) {
     var keyCode = window.event ? ev.keyCode : ev.which;
     //codes for 0-9
     if (keyCode < 48 || keyCode > 57) {
@@ -9,7 +9,7 @@ $('#inputUsed').on('keypress', function(ev) {
     }
 });
 
-$('#inputPrice').on('keypress', function(ev) {
+$('#inputOpenTo').on('keypress', function(ev) {
     var keyCode = window.event ? ev.keyCode : ev.which;
     //codes for 0-9
     if (keyCode < 48 || keyCode > 57) {
@@ -19,25 +19,19 @@ $('#inputPrice').on('keypress', function(ev) {
         }
     }
 });
-
-var deleteDefaultAndChangeBackground = function(inputLabelId, message) {
-    var selectionInput = document.getElementById(inputLabelId);
-
-    if(selectionInput.selectedIndex !== 0 && selectionInput.options[0].text === message)
-        selectionInput.remove(0);
-
-    changeBackground(inputLabelId);
-};
 
 var changeBackground = function(inputLabelId) {
     document.getElementById(inputLabelId).classList.add("correctInputBorder")
 };
 
-var checkSelection = function() {
-    var allSelectionType = document.getElementsByTagName("select");
+var checkIfHasPhone = function () {
+    var checkBoxPhone = document.getElementById('hasPhoneNumber');
+    var phoneNumberInput = document.getElementById('inputPhoneNumber');
 
-    for(i = 0; i < allSelectionType.length; i++) {
-        if(allSelectionType[i].selectedIndex !== 0)
-            allSelectionType[i].remove(0);
-    }
+    if(!checkBoxPhone.checked)
+        phoneNumberInput.value = 'Wprowadź numer telefonu';
+    else
+        phoneNumberInput.value = '';
+
+    phoneNumberInput.disabled = !checkBoxPhone.checked;
 };

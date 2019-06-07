@@ -5,16 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>CarDealer</title>
+    <title>CarNet - Add Car Dealer</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/forAll.css">
-    <link rel="stylesheet" href="../css/addCar.css">
+    <link rel="stylesheet" href="../css/addCarDealer.css">
 </head>
-<body onload="checkSelection()">
+<body onload="checkIfHasPhone()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-bot-50">
         <div class="container">
             <a class="navbar-brand" href="/">CarNet</a>
@@ -32,10 +32,10 @@
                         <a class="nav-link" href="/quickFind">Szybkie sprawdzenie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/addCar">Dodawanie samochodu</a>
+                        <a class="nav-link" href="/addCar">Dodawanie samochodu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/addCarDealer">Dodawanie salonu</a>
+                        <a class="nav-link active" href="/addCarDealer">Dodawanie salonu</a>
                     </li>
                 </ul>
             </div>
@@ -43,104 +43,116 @@
     </nav>
 
     <div class="container styling margin-bot-50 pad-20">
-        <form action="#" th:action="@{/addCar}" method="post" th:object="${carPost}">
+        <th:block th:if="${message}">
+            <div class="wrongInputIcon" style="text-align: center">
+                <i class="fas fa-exclamation"></i>
+                <span th:text="${message}">Information</span>
+            </div>
+        </th:block>
+        <form action="#" th:action="@{/addCarDealer}" method="post" th:object="${carDealerPost}">
             <div class="row" style="margin: 10px">
                 <div class="form-group col-6">
-                    <label for="carDealers">Salon samochodowy</label>
-                    <span th:if="${#fields.hasErrors('carDealerId')}"
+                    <label for="inputNameOfFirm">Salon samochodowy</label>
+                    <span th:if="${#fields.hasErrors('nameOfFirm')}"
                           class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <select class="form-control" id="carDealers" th:field="*{carDealerId}"
-                            th:errorclass="wrongInputBorder"
-                            onchange="deleteDefaultAndChangeBackground('carDealers', 'Wybierz salon')">
-                        <option value="0">Wybierz salon</option>
-                        <th:block th:each="carDealer: ${carDealers}">
-                            <option th:value="${carDealer.carDealerId}"
-                                    th:text="${carDealer.nameOfFirm}">Marka</option>
-                        </th:block>
-                    </select>
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('carDealerId')}"
-                          th:errors="*{carDealerId}">Name Error</span>
+                    <input type="text" class="form-control" id="inputNameOfFirm"
+                           placeholder="Wprowadź nazwę firmy" th:field="*{nameOfFirm}" th:errorclass="wrongInputBorder"
+                           onchange="changeBackground('inputNameOfFirm')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('nameOfFirm')}"
+                          th:errors="*{nameOfFirm}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
-                    <label for="inputMark">Marka </label>
-                    <span th:if="${#fields.hasErrors('make')}"
-                          class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <input type="text" class="form-control" id="inputMark"
-                           placeholder="Wprowadź markę" th:field="*{make}" th:errorclass="wrongInputBorder"
-                           onchange="changeBackground('inputMark')">
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('make')}"
-                          th:errors="*{make}">Name Error</span>
+                    <div class="row">
+                        <div class="col-5">
+                            <div style="position: absolute; top: 100%; transform: translateY(-100%);">
+                                <label for="hasPhoneNumber">Posiadasz telefon? </label>
+                                <input type="checkbox" id="hasPhoneNumber"
+                                       style="margin-left: 0.5rem; margin-top: 0.5rem" th:field="*{hasPhoneNumber}"
+                                onchange="checkIfHasPhone()">
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <label for="inputPhoneNumber">Numer telefonu</label>
+                            <span th:if="${#fields.hasErrors('phoneNumber')}"
+                                  class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
+                            <input type="text" class="form-control" id="inputPhoneNumber"
+                                   placeholder="Wprowadź numer telefonu" th:field="*{phoneNumber}"
+                                   th:errorclass="wrongInputBorder" onchange="changeBackground('inputPhoneNumber')"
+                                  disabled>
+                            <span class="wrongInputText" th:if="${#fields.hasErrors('phoneNumber')}"
+                                  th:errors="*{phoneNumber}">Name Error</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group col-6">
-                    <label for="inputModel">Model </label>
-                    <span th:if="${#fields.hasErrors('model')}"
+                    <label for="inputOpenFrom">Godzina otwarcia</label>
+                    <span th:if="${#fields.hasErrors('openFrom')}"
                           class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <input type="text" class="form-control" id="inputModel"
-                           placeholder="Wprowadź model" th:field="*{model}" th:errorclass="wrongInputBorder"
-                           onchange="changeBackground('inputModel')">
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('model')}"
-                          th:errors="*{model}">Name Error</span>
+                    <input type="text" class="form-control" id="inputOpenFrom"
+                           placeholder="Wprowadź godzinę otwarcia salonu" th:field="*{openFrom}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputOpenFrom')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('openFrom')}"
+                          th:errors="*{openFrom}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
-                    <label for="inputYear">Rok produkcji</label>
-                    <span th:if="${#fields.hasErrors('yearOfProduction')}"
+                    <label for="inputOpenTo">Godzina zamknięcia</label>
+                    <span th:if="${#fields.hasErrors('openTo')}"
                           class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <input type="text" class="form-control" id="inputYear"
-                           placeholder="Wprowadź rok produkcji" th:field="*{yearOfProduction}"
-                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputYear')">
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('yearOfProduction')}"
-                          th:errors="*{yearOfProduction}">Name Error</span>
+                    <input type="text" class="form-control" id="inputOpenTo"
+                           placeholder="Wprowadź godzinę zamknięcia salonu" th:field="*{openTo}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputOpenTo')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('openTo')}"
+                          th:errors="*{openTo}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
-                    <label for="inputUsed">Licznik [km]</label>
-                    <span th:if="${#fields.hasErrors('used')}"
+                    <label for="inputStreet">Ulica</label>
+                    <span th:if="${#fields.hasErrors('street')}"
                           class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <input type="text" class="form-control" id="inputUsed"
-                           placeholder="Wprowadź wartość licznika" th:field="*{used}"
-                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputUsed')">
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('used')}"
-                          th:errors="*{used}">Name Error</span>
+                    <input type="text" class="form-control" id="inputStreet"
+                           placeholder="Wprowadź nazwę ulicy" th:field="*{street}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputStreet')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('street')}"
+                          th:errors="*{street}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
-                    <label for="inputPrice">Cena [zł]</label>
-                    <span th:if="${#fields.hasErrors('price')}"
+                    <label for="inputNumberHome">Numer budynku</label>
+                    <span th:if="${#fields.hasErrors('numberHome')}"
                           class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <input type="text" class="form-control" id="inputPrice"
-                           placeholder="Wprowadź kwotę sprzedaży" th:field="*{price}"
-                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputPrice')">
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('price')}"
-                          th:errors="*{price}">Name Error</span>
+                    <input type="text" class="form-control" id="inputNumberHome"
+                           placeholder="Wprowadź numer budynku" th:field="*{numberHome}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputNumberHome')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('numberHome')}"
+                          th:errors="*{numberHome}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
-                    <label for="carFuel">Paliwo</label>
-                    <span th:if="${#fields.hasErrors('fuel')}"
+                    <label for="inputPostCode">Kod pocztowy</label>
+                    <span th:if="${#fields.hasErrors('postCode')}"
                           class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <select class="form-control" id="carFuel" th:field="*{fuel}"
-                            th:errorclass="wrongInputBorder"
-                            onchange="deleteDefaultAndChangeBackground('carFuel', 'Wybierz paliwo')">
-                        <option value="none">Wybierz paliwo</option>
-                        <option th:each="fuelEnum : ${T(pl.czarek.carnet.data.entity.Fuel).getFuels()}"
-                                th:value="${fuelEnum}"
-                                th:text="${fuelEnum.getTypeOfFuel()}">
-                        </option>
-                    </select>
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('fuel')}"
-                          th:errors="*{fuel}">Name Error</span>
+                    <input type="text" class="form-control" id="inputPostCode"
+                           placeholder="Wprowadź kod pocztowy" th:field="*{postCode}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputPostCode')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('postCode')}"
+                          th:errors="*{postCode}">Name Error</span>
                 </div>
                 <div class="form-group col-6">
-                    <label for="inputEngine">Silnik [dm3]</label>
-                    <span th:if="${#fields.hasErrors('engine')}"
+                    <label for="inputCity">Miasto</label>
+                    <span th:if="${#fields.hasErrors('city')}"
                           class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
-                    <input type="text" class="form-control" id="inputEngine"
-                           placeholder="Wprowadź pojemność silnika" th:field="*{engine}"
-                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputEngine')">
-                    <span class="wrongInputText" th:if="${#fields.hasErrors('engine')}"
-                          th:errors="*{engine}">Name Error</span>
+                    <input type="text" class="form-control" id="inputCity"
+                           placeholder="Wprowadź miasto" th:field="*{city}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputCity')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('city')}"
+                          th:errors="*{city}">Name Error</span>
                 </div>
-                <div class="form-check col-4">
-                    <label class="form-check-label" for="airConditioning">Klimatyzacja</label>
-                    <input type="checkbox" class="form-check-input" id="airConditioning"
-                           style="margin-left: 0.5rem; margin-top: 0.5rem" th:field="*{airConditioning}">
+                <div class="form-group col-6">
+                    <label for="inputCountry">Państwo</label>
+                    <span th:if="${#fields.hasErrors('country')}"
+                          class="wrongInputIcon"><i class="fas fa-exclamation"></i></span>
+                    <input type="text" class="form-control" id="inputCountry"
+                           placeholder="Wprowadź państwo" th:field="*{country}"
+                           th:errorclass="wrongInputBorder" onchange="changeBackground('inputCountryf')">
+                    <span class="wrongInputText" th:if="${#fields.hasErrors('country')}"
+                          th:errors="*{country}">Name Error</span>
                 </div>
                 <div class="col-12" style="text-align: center">
                     <input type="submit" value="Prześlij" class="btn btn-primary btn-lg btn-grey">
@@ -158,6 +170,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-<script src="/js/addCar.js"></script>
+<script src="/js/addCarDealer.js"></script>
 </body>
 </html>

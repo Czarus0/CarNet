@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Address {
     @Id
     @Column(name = "ADDRESS_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long addressId;
     @Column(name = "STREET")
     private String street;

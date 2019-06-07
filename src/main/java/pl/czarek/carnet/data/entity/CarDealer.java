@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class CarDealer {
     @Id
     @Column(name = "CAR_DEALER_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long carDealerId;
     @Column(name = "NAME_OF_FIRM")
     private String nameOfFirm;

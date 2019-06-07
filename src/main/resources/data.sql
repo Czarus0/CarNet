@@ -10,13 +10,13 @@ INSERT INTO ADDRESS (STREET, NUMBER_HOME, POST_CODE, CITY, COUNTRY)
             VALUES ('Aleja Stanisława Jachowicza', '4A', '09-100', 'Płock', 'Polska');
 
 INSERT INTO CAR_DEALER (NAME_OF_FIRM, ADDRESS_ID, PHONE_NUMBER, OPEN_FROM, OPEN_TO, CAR_DEALER_IMAGE)
-            VALUES ('Auto Plaza', 1, '852741963', '10', '18', '/img/carDealers/1/cardealer-main.jpg');
+            VALUES ('Auto Plaza', 1, '852-741-963', '10', '18', '/img/carDealers/1/cardealer-main.jpg');
 INSERT INTO CAR_DEALER (NAME_OF_FIRM, ADDRESS_ID, PHONE_NUMBER, OPEN_FROM, OPEN_TO, CAR_DEALER_IMAGE)
-            VALUES ('Aries Motor', 2, '123456789', '9', '17', '/img/carDealers/2/cardealer-main.jpg');
+            VALUES ('Aries Motor', 2, '123-456-789', '9', '17', '/img/carDealers/2/cardealer-main.jpg');
 INSERT INTO CAR_DEALER (NAME_OF_FIRM, ADDRESS_ID, PHONE_NUMBER, OPEN_FROM, OPEN_TO, CAR_DEALER_IMAGE)
             VALUES ('Odyssey Dealer', 3, NULL, '12', '20', '/img/carDealers/3/cardealer-main.jpg');
 INSERT INTO CAR_DEALER (NAME_OF_FIRM, ADDRESS_ID, PHONE_NUMBER, OPEN_FROM, OPEN_TO, CAR_DEALER_IMAGE)
-            VALUES ('AutoAdamski', 4, '456123789', '8', '20', '/img/carDealers/4/cardealer-main.jpg');
+            VALUES ('AutoAdamski', 4, '456-123-789', '8', '20', '/img/carDealers/4/cardealer-main.jpg');
 INSERT INTO CAR_DEALER (NAME_OF_FIRM, ADDRESS_ID, PHONE_NUMBER, OPEN_FROM, OPEN_TO, CAR_DEALER_IMAGE)
             VALUES ('AutoSalon24', 5, NULL,  '12', '22', '/img/carDealers/5/cardealer-main.jpg');
 

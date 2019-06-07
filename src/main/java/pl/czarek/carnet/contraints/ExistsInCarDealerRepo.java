@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = NotNoneValidator.class)
-public @interface ExistsInRepo {
+@Constraint(validatedBy = ExistsInCarDealerRepoValidator.class)
+public @interface ExistsInCarDealerRepo {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String message() default "Nie może być wartość \'none\'";
+    String message() default "Taka nazwa firmy już istnieje";
 }

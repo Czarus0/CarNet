@@ -29,3 +29,9 @@ body {
     border: #343a40 solid 5px;
     background-color: white;
 }
+
+.info-none {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}

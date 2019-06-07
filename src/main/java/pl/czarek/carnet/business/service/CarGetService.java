@@ -56,7 +56,8 @@ public class CarGetService {
         Iterable<Car> cars = this.carRepository.findAll();
         cars.forEach(car -> makes.add(car.getMake()));
 
-        return List.copyOf(makes);
+
+        return new ArrayList<>(makes);
     }
 
     public List<String> getAllModelInMake(String make) {
@@ -64,7 +65,7 @@ public class CarGetService {
         Iterable<Car> cars = this.carRepository.findByMake(make);
         cars.forEach(car -> models.add(car.getModel()));
 
-        return List.copyOf(models);
+        return new ArrayList<>(models);
     }
 
 
